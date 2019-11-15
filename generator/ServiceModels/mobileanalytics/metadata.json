@@ -64,11 +64,11 @@
         ], 
         "Unity": [
             {
-                "hint-path": "Editor\\Data\\Mono\\lib\\mono\\2.0\\System.Data.dll", 
+                "hint-path": "Editor\\Data\\MonoBleedingEdge\\lib\\mono\\4.5\\System.Data.dll", 
                 "name": "System.Data"
             }, 
             {
-                "hint-path": "Editor\\Data\\Mono\\lib\\mono\\2.0\\Mono.Data.SQLite.dll", 
+                "hint-path": "Editor\\Data\\MonoBleedingEdge\\lib\\mono\\4.5\\Mono.Data.SQLite.dll", 
                 "name": "Mono.Data.SQLite"
             }
         ]
