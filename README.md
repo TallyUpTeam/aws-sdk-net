@@ -1,5 +1,17 @@
 # AWS SDK for .NET [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aws/aws-sdk-net?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Build Status](https://travis-ci.org/aws/aws-sdk-net.png?branch=master)](https://travis-ci.org/aws/aws-sdk-net)
 
+## TallyUP! changes for Unity
+Added CognitoIdentityProvider service to Unity build and changed .NET runtime from 3.5 to 4.5. Also fixed some bugs - see:
+* http://www.gradientspace.com/tutorials/2018/1/25/using-aws-cognito-user-accounts-with-unity and https://github.com/rms80/aws-sdk-net
+* https://github.com/aws/aws-sdk-net/issues/1286 and https://github.com/Andreyul/aws-sdk-net/commit/6ec9ac80779f1811e7c9625e4300eb618e6397eb
+
+### Building
+Open the `sdk\AWSSDK.Unity.sln` solution in Visual Studio 2017 on a Windows 10 PC with Unity and Cygwin64 installed (building does not work in Visual Studio 2019 for some reason). Do a 'Build Solution' to build all the DLLs.
+
+Then run bash script `./copy-dlls.sh` from the top-level folder to copy the DLLs into `./AWSSDK`. This assumes you are running from a Cygwin64 window. You will need to edit and change paths if you are using WSL/Ubuntu instead. Copy the contents of `./AWSSDK` to your Unity Assets folder somewhere. (Later, we can look at building a .unitypackage instead.)
+
+## Original README...
+
 The **AWS SDK for .NET** enables .NET developers to easily work with [Amazon Web Services][aws] and build scalable solutions with Amazon S3, Amazon DynamoDB, Amazon Glacier, and more.
 
 * [API Docs][docs-api]
