@@ -70,7 +70,11 @@ namespace Amazon.Util.Internal
                 var javaClass = Activator.CreateInstance(androidJavaClassType, className);
                 var callStaticMethod = androidJavaClassType.GetMethods()
                     .Where(x => x.Name == "CallStatic")
-                    .First(x => x.ContainsGenericParameters);
+                    .First(x => x.ContainsGenericParameters &&
+                        x.GetParameters()
+                            .Select(y => y.ParameterType)
+                            .SequenceEqual(new Type[] { typeof(string), typeof(object[]) })
+                    );
 
                 var genericStaticMethod = callStaticMethod.MakeGenericMethod(androidJavaObjectType);
 
@@ -89,7 +93,13 @@ namespace Amazon.Util.Internal
         /// <returns></returns>
         public static T CallMethod<T>(object androidJavaObject, string methodName, params object[] parameters)
         {
-            var method = androidJavaObject.GetType().GetMethods().Where(x => x.Name == "Call").First(x => x.ContainsGenericParameters);
+            var method = androidJavaObject.GetType().GetMethods()
+                .Where(x => x.Name == "Call")
+                .First(x => x.ContainsGenericParameters &&
+                    x.GetParameters()
+                        .Select(y => y.ParameterType)
+                        .SequenceEqual(new Type[] { typeof(string), typeof(object[]) })
+                );
             var genericMethod = method.MakeGenericMethod(typeof(T));
             return (T)genericMethod.Invoke(androidJavaObject, new object[] { methodName, parameters });
         }
@@ -106,7 +116,11 @@ namespace Amazon.Util.Internal
             Type androidJavaObjectType = InternalSDKUtils.GetTypeFromUnityEngine("AndroidJavaObject");
             var method = androidJavaObject.GetType().GetMethods()
                 .Where(x => x.Name == "Call")
-                .First(x => x.ContainsGenericParameters);
+                .First(x => x.ContainsGenericParameters &&
+                    x.GetParameters()
+                        .Select(y => y.ParameterType)
+                        .SequenceEqual(new Type[] { typeof(string), typeof(object[]) })
+                );
             var genericMethod = method.MakeGenericMethod(androidJavaObjectType);
             return genericMethod.Invoke(androidJavaObject, new object[] { methodName, parameters });
         }
@@ -169,7 +183,14 @@ namespace Amazon.Util.Internal
         /// <returns></returns>
         public static T GetJavaField<T>(object androidJavaObject, string methodName)
         {
-            var method = androidJavaObject.GetType().GetMethods().Where(x => x.Name == "Get").First(x => x.ContainsGenericParameters);
+            var method = androidJavaObject.GetType()
+                .GetMethods()
+                .Where(x => x.Name == "Get")
+                .First(x => x.ContainsGenericParameters &&
+                    x.GetParameters()
+                        .Select(y => y.ParameterType)
+                        .SequenceEqual(new Type[] { typeof(string) })
+            );
             var genericMethod = method.MakeGenericMethod(typeof(T));
             return (T)genericMethod.Invoke(androidJavaObject, new object[] { methodName });
         }
